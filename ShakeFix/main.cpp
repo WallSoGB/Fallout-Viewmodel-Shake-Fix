@@ -54,7 +54,7 @@ static _declspec(naked) void CameraHookJmp(PlayerCharacter* apPlayer) {
 }
 
 static void InitHooks() {
-	if (*(UInt8*)0x8755FF != 0xCD) {
+	if (*(UInt32*)0x8755FF != 0xFFC778CD) {
 		return;
 	}
 	WriteRelJump(0x874EBF, CameraHookJmp);
