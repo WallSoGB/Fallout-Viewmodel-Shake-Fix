@@ -9,7 +9,7 @@ bool NVSEPlugin_Query(const NVSEInterface* nvse, PluginInfo* info)
 {
 	info->infoVersion = PluginInfo::kInfoVersion;
 	info->name = "Viewmodel Shake Fix";
-	info->version = 100;
+	info->version = 110;
 	return true;
 }
 
