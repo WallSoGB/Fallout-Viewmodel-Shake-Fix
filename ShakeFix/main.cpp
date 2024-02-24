@@ -36,13 +36,10 @@ static void __fastcall HandleCameraTranslate(PlayerCharacter* apPlayer) {
 		TESMain::GetSingleton()->spFirstPersonCamera->SetWorldTranslate(apPlayer->pIronSightNode->GetWorldTranslate());
 }
 
-static void __cdecl ResetColorWriteEnable(BOOL abValue) {
-	// Restore player position
-	NiAVObject* pPlayerNode = PlayerCharacter::GetSingleton()->spPlayerNode;
-	pPlayerNode->SetLocalTranslate(kOrgPlayerPositions[0]);
-	pPlayerNode->SetWorldTranslate(kOrgPlayerPositions[1]);
-
-	CdeclCall(0x4ECED0, abValue);
+static void __fastcall RestorePlayerPosition(NiAVObject* apNode, void*, NiUpdateData& arData) {
+	apNode->SetLocalTranslate(kOrgPlayerPositions[0]);
+	apNode->SetWorldTranslate(kOrgPlayerPositions[1]);
+	apNode->Update(arData);
 }
 
 static _declspec(naked) void CameraHookJmp(PlayerCharacter* apPlayer) {
@@ -58,7 +55,7 @@ static void InitHooks() {
 		return;
 	}
 	WriteRelJump(0x874EBF, CameraHookJmp);
-	ReplaceCall(0x8755FE, ResetColorWriteEnable);
+	WriteRelCall(0x875956, UInt32(RestorePlayerPosition));
 }
 
 static void MessageHandler(NVSEMessagingInterface::Message* msg) {
