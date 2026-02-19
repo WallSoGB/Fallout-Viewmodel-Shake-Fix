@@ -1,12 +1,5 @@
 #pragma once
 
-#include "SafeWrite.h"
-#include "Utilities.h"
-
-#define ASSERT_SIZE(a, b) static_assert(sizeof(a) == b, "Wrong structure size!");
-#define ASSERT_OFFSET(a, b, c) static_assert(offsetof(a, b) == c, "Wrong member offset!");
-#define CREATE_OBJECT(CLASS, ADDRESS) static CLASS* CreateObject() { return StdCall<CLASS*>(ADDRESS); };
-
 class NiNode;
 class NiGeometry;
 class NiTriBasedGeom;
@@ -50,8 +43,6 @@ public:
 	bool byte6;
 	bool bUpdateGeomorphs;
 	bool bUpdateShadowSceneNode;
-
-	static NiUpdateData kDefaultUpdateData;
 };
 
 class NiMatrix3 {
@@ -89,10 +80,10 @@ public:
 	virtual ~NiTArray();
 
 	T_Data* m_pBase;
-	UInt16 m_usMaxSize;
-	UInt16 m_usSize;
-	UInt16 m_usESize;
-	UInt16 m_usGrowBy;
+	uint16_t m_usMaxSize;
+	uint16_t m_usSize;
+	uint16_t m_usESize;
+	uint16_t m_usGrowBy;
 };
 
 ASSERT_SIZE(NiTArray<void*>, 0x10);
@@ -112,9 +103,9 @@ class NiTListBase {
 public:
 	NiTListItem<T_Data>*	m_pkHead;
 	NiTListItem<T_Data>*	m_pkTail;
-	UInt32					m_uiCount;
+	uint32_t					m_uiCount;
 
-	inline UInt32 GetSize() const { return m_uiCount; };
+	inline uint32_t GetSize() const { return m_uiCount; };
 	bool IsEmpty() const { return m_uiCount == 0; };
 
 	NiTListIterator GetHeadPos() const { return m_pkHead; };
@@ -126,7 +117,7 @@ public:
     virtual			~NiRefObject();
     virtual void	DeleteThis();
 
-    UInt32 m_uiRefCount;
+    uint32_t m_uiRefCount;
 
     // 0x40F6E0
     inline void IncRefCount() {
@@ -182,8 +173,8 @@ public:
 	const char*	m_kName;
 	void*		m_spControllers;
 	void**		m_ppkExtra;
-	UInt16		m_usExtraDataSize;
-	UInt16		m_usMaxSize;
+	uint16_t		m_usExtraDataSize;
+	uint16_t		m_usMaxSize;
 };
 
 class NiAVObject : public NiObjectNET {
@@ -194,9 +185,9 @@ public:
 	virtual NiAVObject*		GetObject_(const NiFixedString& kName);
 	virtual NiAVObject*		GetObjectByName(const NiFixedString& kName);
 	virtual void			SetSelectiveUpdateFlags(bool* bSelectiveUpdate, bool bSelectiveUpdateTransforms, bool* bRigid);
-	virtual void			UpdateDownwardPass(const NiUpdateData& arData, UInt32 uFlags);
-	virtual void			UpdateSelectedDownwardPass(const NiUpdateData& arData, UInt32 uFlags);
-	virtual void			UpdateRigidDownwardPass(const NiUpdateData& arData, UInt32 uFlags);
+	virtual void			UpdateDownwardPass(const NiUpdateData& arData, uint32_t uFlags);
+	virtual void			UpdateSelectedDownwardPass(const NiUpdateData& arData, uint32_t uFlags);
+	virtual void			UpdateRigidDownwardPass(const NiUpdateData& arData, uint32_t uFlags);
 	virtual void			Unk_46(void* arg);
 	virtual void			UpdateTransform();
 	virtual void			UpdateWorldData(const NiUpdateData& arData);
@@ -213,7 +204,7 @@ public:
 	bhkNiCollisionObject*			m_spCollisionObject;
 	NiBound*						m_kWorldBound;
 	NiTListBase<NiProperty*>		m_kPropertyList;
-	Bitfield32						m_uiFlags;
+	uint32_t						m_uiFlags;
 	NiTransform						m_kLocal;
 	NiTransform						m_kWorld;
 
@@ -241,7 +232,7 @@ public:
 	}
 
 	void Update(NiUpdateData& arData) {
-		ThisStdCall(0xA59C60, this, &arData);
+		ThisCall(0xA59C60, this, &arData);
 	}
 };
 
@@ -258,14 +249,14 @@ public:
 	}
 
 	bool IsInReloadAnim() const {
-		return ThisStdCall<bool>(0x8A8870, this);
+		return ThisCall<bool>(0x8A8870, this);
 	}
 };
 
 class VATSCameraData {
 public:
 	char	filler[8];
-	UInt32	eMode;
+	uint32_t	eMode;
 
 	bool HasMode() const { return eMode != 0; };
 };

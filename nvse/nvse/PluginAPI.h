@@ -10,7 +10,7 @@ struct ArrayKey;
 namespace PluginAPI { class ArrayAPI; }
 struct PluginInfo;
 
-typedef UInt32	PluginHandle;	// treat this as an opaque type
+typedef uint32_t	PluginHandle;	// treat this as an opaque type
 
 enum
 {
@@ -43,13 +43,13 @@ struct ExpressionEvaluatorUtils;
 
 struct NVSEInterface
 {
-	UInt32	nvseVersion;
-	UInt32	runtimeVersion;
-	UInt32	editorVersion;
-	UInt32	isEditor;
+	uint32_t	nvseVersion;
+	uint32_t	runtimeVersion;
+	uint32_t	editorVersion;
+	uint32_t	isEditor;
 	bool	(* RegisterCommand)(CommandInfo * info);	// returns true for success, false for failure
-	void	(* SetOpcodeBase)(UInt32 opcode);
-	void *	(* QueryInterface)(UInt32 id);
+	void	(* SetOpcodeBase)(uint32_t opcode);
+	void *	(* QueryInterface)(uint32_t id);
 
 	// call during your Query or Load functions to get a PluginHandle uniquely identifying your plugin
 	// invalid if called at any other time, so call it once and save the result
@@ -61,7 +61,7 @@ struct NVSEInterface
 	const char* (* GetRuntimeDirectory)();
 
 	// Allows checking for nogore edition
-	UInt32	isNogore;
+	uint32_t	isNogore;
 
 	void		(*InitExpressionEvaluatorUtils)(ExpressionEvaluatorUtils *utils);
 };
@@ -73,9 +73,9 @@ struct PluginInfo
 		kInfoVersion = 1
 	};
 
-	UInt32			infoVersion;
+	uint32_t			infoVersion;
 	const char *	name;
-	UInt32			version;
+	uint32_t			version;
 };
 
 typedef bool (* _NVSEPlugin_Query)(const NVSEInterface * nvse, PluginInfo * info);
@@ -85,8 +85,8 @@ struct NVSEMessagingInterface
 {
 	struct Message {
 		const char* sender;
-		UInt32		type;
-		UInt32		dataLen;
+		uint32_t		type;
+		uint32_t		dataLen;
 		void* data;
 	};
 
@@ -157,7 +157,7 @@ kMessage_EventListDestroyed, // called before a script event list is destroyed, 
 kMessage_PostQueryPlugins // called after all plugins have been queried
 	};
 
-	UInt32	version;
+	uint32_t	version;
 	bool	(*RegisterListener)(PluginHandle listener, const char* sender, EventCallback handler);
-	bool	(*Dispatch)(PluginHandle sender, UInt32 messageType, void* data, UInt32 dataLen, const char* receiver);
+	bool	(*Dispatch)(PluginHandle sender, uint32_t messageType, void* data, uint32_t dataLen, const char* receiver);
 };

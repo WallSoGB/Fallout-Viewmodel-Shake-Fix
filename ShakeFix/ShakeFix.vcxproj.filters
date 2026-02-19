@@ -1,24 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="nvse">
-      <UniqueIdentifier>{92a4f350-f2ec-4fca-bdd3-927732d91b34}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\nvse\nvse\SafeWrite.cpp">
-      <Filter>nvse</Filter>
-    </ClCompile>
-    <ClCompile Include="dllmain.c" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="..\shared\SafeWrite\SafeWrite.cpp">
+      <Filter>shared\SafeWrite</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\nvse\nvse\SafeWrite.h">
-      <Filter>nvse</Filter>
-    </ClInclude>
     <ClInclude Include="GameData.hpp" />
+    <ClInclude Include="..\shared\Defines.hpp">
+      <Filter>shared</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shared\SafeWrite\SafeWrite.hpp">
+      <Filter>shared\SafeWrite</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="exports.def" />
+    <Filter Include="shared">
+      <UniqueIdentifier>{89ec8899-66c5-4b1b-9696-d9c66c5cd173}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shared\SafeWrite">
+      <UniqueIdentifier>{aa5a376d-0cb0-4fe4-bbe0-a337e1927818}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
